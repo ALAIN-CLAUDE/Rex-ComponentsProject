@@ -1,0 +1,8 @@
+<!--
+ - Created by EvgeniyMalahovskiy on 9/7/2022.
+ -->
+
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+    <lightning:quickActionAPI aura:id="quickActionAPI" />
+    <c:leadCustomPath recordId="{!v.recordId}" onchildmethod="{!c.fireGlobal}"/>
+</aura:component>

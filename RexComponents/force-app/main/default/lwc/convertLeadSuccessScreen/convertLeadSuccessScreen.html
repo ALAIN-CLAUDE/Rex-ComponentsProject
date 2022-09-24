@@ -1,0 +1,431 @@
+<!--
+ - Created by EvgeniyMalahovskiy on 8/25/2022.
+ -->
+
+<!-- Convert Lead Success Screen -->
+<template>
+    <div class="accordianBack">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" class="slds-p-around_medium">
+                <div class="slds-text-align_center slds-text-heading_large" style="color: #181818;font-weight: 300">Your lead has been converted</div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" class="slds-align_absolute-center slds-p-bottom_large">
+                <img style="width:20%;" alt="Lead Converted" src="/projRes/ui-lead-runtime-components/images/lead_convert_celebration@2x.gif"/>
+            </lightning-layout-item>
+        </lightning-layout>
+        <template if:true={convertWrap.isPersonAccount}>
+            <div class="dataSection">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12 slds-p-bottom_xx-large">
+                        <div class="slds-text-heading_large slds-align_absolute-center" style="color: #181818;font-weight: 300;font-size: 1.3rem">PERSON ACCOUNT</div>
+
+                        <div class="slds-grid slds-wrap slds-p-top_large">
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <lightning-card icon-name="standard:account">
+                                    <h1 slot="title">
+                                        <a onclick={goToAccount}>{convertWrap.convertedAccount.Name}</a>
+                                    </h1>
+                                </lightning-card>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Title : {convertWrap.convertedAccount.PersonTitle}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Phone : {convertWrap.convertedAccount.Phone}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Email : {convertWrap.convertedAccount.PersonEmail}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Mobile : {convertWrap.convertedAccount.PersonMobilePhone}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Account Owner : {convertWrap.accountOwner}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-text-heading_large slds-align_absolute-center" style="color: #181818;font-weight: 300;font-size: 1.3rem">OPPORTUNITY</div>
+
+                        <div class="slds-grid slds-wrap slds-p-top_large">
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <lightning-card icon-name="standard:opportunity">
+                                    <h1 slot="title">
+                                        <a onclick={goToOpp}>{convertWrap.convertedOpportunity.Name}</a>
+                                    </h1>
+                                </lightning-card>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Account Name : {convertWrap.oppAccountName}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Close Date : {convertWrap.convertedOpportunity.CloseDate}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Amount : {convertWrap.convertedOpportunity.Amount}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Opportunity Owner : {convertWrap.oppOwner}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium slds-p-bottom_medium" style="background-color: white">
+                                <div class="slds-hidden">
+                                    <h1 >
+                                        Opportunity Owner :
+                                    </h1>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+
+        <template if:false={convertWrap.isPersonAccount}>
+            <div class="dataSection">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_4-of-12 slds-p-bottom_xx-large">
+                        <div class="slds-text-heading_large slds-align_absolute-center" style="color: #181818;font-weight: 300;font-size: 1.3rem">ACCOUNT</div>
+
+                        <div class="slds-grid slds-wrap slds-p-top_large">
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <lightning-card icon-name="standard:account">
+                                    <h1 slot="title">
+                                        <a onclick={goToAccount}>{convertWrap.convertedAccount.Name}</a>
+                                    </h1>
+                                </lightning-card>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Phone : {convertWrap.convertedAccount.Phone}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Industry : {convertWrap.convertedAccount.Industry}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <div class="slds-hidden">
+                                    Hide
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <div class="slds-hidden">
+                                    Hide
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium" style="background-color: white">
+                                <div class="slds-hidden">
+                                    Hide
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <div class="slds-text-heading_large slds-align_absolute-center" style="color: #181818;font-weight: 300;font-size: 1.3rem">CONTACT</div>
+
+                        <div class="slds-grid slds-wrap slds-p-top_large">
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <lightning-card icon-name="standard:contact">
+                                    <h1 slot="title">
+                                        <a onclick={goToContact}>{convertWrap.convertedContact.Name}</a>
+                                    </h1>
+                                </lightning-card>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Title : {convertWrap.convertedContact.Title}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Account Name : {convertWrap.contactAccountName}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Phone : {convertWrap.convertedContact.Phone}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Email : {convertWrap.convertedContact.Email}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium slds-p-bottom_medium" style="background-color: white">
+                                <h1 >
+                                    Mobile : {convertWrap.convertedContact.MobilePhone}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_4-of-12">
+                        <div class="slds-text-heading_large slds-align_absolute-center" style="color: #181818;font-weight: 300;font-size: 1.3rem">OPPORTUNITY</div>
+
+                        <div class="slds-grid slds-wrap slds-p-top_large">
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <lightning-card icon-name="standard:opportunity">
+                                    <h1 slot="title">
+                                        <a onclick={goToOpp}>{convertWrap.convertedOpportunity.Name}</a>
+                                    </h1>
+                                </lightning-card>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Account Name : {convertWrap.oppAccountName}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Close Date : {convertWrap.convertedOpportunity.CloseDate}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Amount : {convertWrap.convertedOpportunity.Amount}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium" style="background-color: white">
+                                <h1 >
+                                    Opportunity Owner : {convertWrap.oppOwner}
+                                </h1>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+
+                            <div class="slds-col slds-size_10-of-12 slds-p-horizontal_medium slds-p-top_medium slds-p-bottom_medium" style="background-color: white">
+                                <div class="slds-hidden">
+                                    <h1 >
+                                        Opportunity Owner :
+                                    </h1>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-hidden">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

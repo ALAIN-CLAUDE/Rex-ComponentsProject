@@ -1,0 +1,67 @@
+<!--
+ - Created by EvgeniyMalahovskiy on 8/23/2022.
+ -->
+
+<!-- Convert Lead Close Section -->
+<template>
+    <div class="slds-grid slds-wrap slds-p-around_medium">
+        <div class="slds-col slds-size_6-of-12">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_3-of-12">
+                    <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                        <button class="slds-button slds-button_reset slds-accordion__summary-action" title="Accordion summary" onclick={handleClick}>
+                                <span class="accordionIcons slds-show_inline-block">
+                                    <span class="accordionIcon">
+                                        <lightning-icon icon-name="utility:chevronright" alternative-text="Open" title="Open" size="x-small"></lightning-icon>
+                                    </span>
+                                </span>
+                            <span title="Account" class="slds-truncate slds-text-heading_x-small displayLabel slds-p-left_small">
+                                    {currentObject}
+                                </span>
+                        </button>
+                    </h3>
+                </div>
+                <div class="slds-col slds-size_9-of-12">
+                    <h3 class="slds-text-heading_small slds-accordion__summary-heading slds-text-title_bold">
+                        <lightning-input type="radio" label="Create New" onchange={handleToggleAccount} checked={createNewAccountToggle}></lightning-input>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_6-of-12">
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium">
+                <div class="slds-col slds-size_2-of-12">
+                    - OR -
+                </div>
+                <div class="slds-col slds-size_10-of-12">
+                    <h3 class="slds-text-heading_small slds-accordion__summary-heading slds-text-title_bold">
+                        <lightning-input type="radio" label="Choose Existing" onchange={handleToggleAccount} checked={chooseExistingToggle} disabled={disableRadioButton}></lightning-input>
+                    </h3>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="slds-col slds-size_6-of-12 slds-p-vertical_small">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_3-of-12 slds-hidden">
+                    Hidden
+                </div>
+                <div class="slds-col slds-size_9-of-12">
+                    <lightning-input type="text" variant="label-hidden" onclick={handleClick} value={valueForInputName}></lightning-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-col slds-size_6-of-12 slds-p-vertical_small">
+            <div class="slds-grid slds-wrap slds-p-horizontal_medium">
+                <div class="slds-col slds-size_2-of-12 slds-hidden">
+                    Hidden
+                </div>
+                <div class="slds-col slds-size_10-of-12">
+                    <lightning-input type="text" variant="label-hidden" value={valueForInput} onclick={handleClick}></lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

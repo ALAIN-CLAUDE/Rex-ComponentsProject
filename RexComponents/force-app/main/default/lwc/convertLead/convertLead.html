@@ -1,0 +1,451 @@
+<!--
+ - Created by tricia.igoe on 6/6/20.
+ -->
+
+<!-- Convert Lead -->
+<template>
+    <lightning-spinner if:true={isLoading} size="medium"></lightning-spinner>
+    <template if:true={data}>
+        <template if:false={data.isConverted}>
+        <template if:false={convertedSuccess}>
+        <div class="mainContent">
+            <div class="header">
+                <div class="headerName slds-align_absolute-center slds-p-top_medium">
+                    <h2 class="title slds-text-heading--medium slds-hyphenate">Convert Lead</h2>
+                </div>
+            </div>
+            <div class="sections slds-p-top_medium">
+                <div class="accountSection" style="background-color: #F3F3F3">
+                    <template if:false={openAccount}>
+                        <c-convert-lead-close-section
+                                style="overflow: hidden"
+                                current-object="Account"
+                                create-new-account-toggle={createNewAccountToggle}
+                                choose-existing-toggle={chooseExistingToggle}
+                                value-for-input={valueForAccountCloseSection}
+                                value-for-input-name={data.accountName}
+                                oncallclosesection={handleCloseSectionClick}>
+                        </c-convert-lead-close-section>
+                    </template>
+                    <template if:true={openAccount}>
+                        <div class="slds-grid slds-wrap slds-p-around_medium">
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                                            <button class="slds-button slds-button_reset slds-accordion__summary-action" title="Accordion summary" onclick={handleCloseAccountSection}>
+                                            <span class="accordionIcons slds-show_inline-block">
+                                                <span class="accordionIcon">
+                                                    <lightning-icon icon-name="utility:chevrondown" alternative-text="Open" title="Open" size="x-small"></lightning-icon>
+                                                </span>
+                                            </span>
+                                                <span title="Account" class="slds-truncate slds-text-heading_x-small displayLabel slds-p-left_small">
+                                                Account
+                                            </span>
+                                            </button>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-col slds-size_9-of-12">
+                                        <h3 class="slds-text-heading_small slds-accordion__summary-heading slds-text-title_bold">
+                                            <lightning-input class="accountRadioNew" type="radio" label="Create New" onchange={handleToggleAccount} checked={createNewAccountToggle}></lightning-input>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="slds-grid slds-wrap slds-p-horizontal_medium">
+                                    <div class="slds-col slds-size_2-of-12">
+                                        - OR -
+                                    </div>
+                                    <div class="slds-col slds-size_10-of-12">
+                                        <h3 class="slds-text-heading_small slds-accordion__summary-heading slds-text-title_bold">
+                                            <lightning-input class="accountRadioExisting" type="radio" label="Choose Existing" onchange={handleToggleAccount} checked={chooseExistingToggle}></lightning-input>
+                                        </h3>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="slds-col slds-size_6-of-12 slds-p-vertical_small">
+                                <div class="slds-grid slds-wrap">
+                                    <template if:true={data.companyNotEmpty}>
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input name="accountName" class="accountName" type="text" label="Account Name" value={data.accountName} onchange={onFieldChange}></lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-combobox
+                                                    name="Account RT"
+                                                    label="Record Type"
+                                                    value={data.accountRecordTypeValue}
+                                                    options={accountRecordTypeOptions}
+                                                    onchange={handleChangeAccountRecordType} >
+                                            </lightning-combobox>
+
+                                        </div>
+                                    </template>
+
+                                    <template if:false={data.companyNotEmpty}>
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-combobox
+                                                    name="Salutation"
+                                                    label="Salutation"
+                                                    value={salutationPicklistValue}
+                                                    options={accountSalutationOptions}
+                                                    onchange={handleChangeAccountSalutation}>
+                                            </lightning-combobox>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input name="firstNameAccount" type="text" label="First Name" value={data.firstNamePAccount} onchange={onFieldChange}></lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input name="middleNameAccount" type="text" label="Middle Name" value={data.middleNamePAccount} onchange={onFieldChange}></lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input name="lastNameAccount" class="lastNameAccount" type="text" label="Last Name" onclick={handleClick} value={data.lastNamePAccount} onchange={onFieldChange}></lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input name="suffixAccount" type="text" label="Suffix" onchange={onFieldChange}></lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-combobox
+                                                    name="Account RT"
+                                                    label="Record Type"
+                                                    value={data.accountRecordTypeValue}
+                                                    options={accountRecordTypeOptions}
+                                                    onchange={handleChangeAccountRecordType} >
+                                            </lightning-combobox>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_6-of-12 slds-p-vertical_small">
+                                <div class="slds-grid slds-wrap slds-p-horizontal_medium">
+                                    <div class="slds-col slds-size_2-of-12 slds-hidden">
+                                        Hidden
+                                    </div>
+                                    <div class="slds-col slds-size_10-of-12 slds-p-top_x-small">
+                                        <c-custom-search-lookup
+                                                class="accountLookup"
+                                                icon-name="standard:account"
+                                                account-record-type={data.accountRecordTypeValue}
+                                                label="Account Search"
+                                                s-object-api-name="Account"
+                                                onlookupupdate={lookupRecord}
+                                                default-record-id={data.existingAccountId}
+                                                placeholder="Search for matching">
+                                        </c-custom-search-lookup>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <template if:true={data.companyNotEmpty}>
+                <div class="sections slds-p-top_x-small">
+                    <div class="contactSection" style="background-color: #F3F3F3">
+                        <template if:false={openContact}>
+                            <c-convert-lead-close-section
+                                    style="overflow: hidden"
+                                    current-object="Contact"
+                                    choose-existing-toggle={chooseExistingContactToggle}
+                                    create-new-account-toggle={createNewContactToggle}
+                                    value-for-input={valueForContactCloseSection}
+                                    oncallclosesection={handleCloseSectionClick}
+                                    value-for-input-name={data.fullNameContact}>
+                            </c-convert-lead-close-section>
+                        </template>
+
+                        <template if:true={openContact}>
+                            <div class="slds-grid slds-wrap slds-p-around_medium">
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_3-of-12">
+                                            <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                                                <button class="slds-button slds-button_reset slds-accordion__summary-action" title="Accordion summary" onclick={handleCloseContactSection}>
+                                                    <span class="accordionIcons slds-show_inline-block">
+                                                        <span class="accordionIcon">
+                                                            <lightning-icon icon-name="utility:chevrondown" alternative-text="Open" title="Open" size="x-small"></lightning-icon>
+                                                        </span>
+                                                    </span>
+                                                    <span title="Contact" class="slds-truncate slds-text-heading_x-small displayLabel slds-p-left_small">
+                                                        Contact
+                                                    </span>
+                                                </button>
+                                            </h3>
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12">
+                                            <h3 class="slds-text-heading_small slds-accordion__summary-heading slds-text-title_bold">
+                                                <lightning-input class="contactRadioNew" type="radio" label="Create New" onchange={handleToggleContact} checked={createNewContactToggle}></lightning-input>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div class="slds-grid slds-wrap slds-p-horizontal_medium">
+                                        <div class="slds-col slds-size_2-of-12">
+                                            - OR -
+                                        </div>
+                                        <div class="slds-col slds-size_10-of-12">
+                                            <h3 class="slds-text-heading_small slds-accordion__summary-heading slds-text-title_bold">
+                                                <lightning-input class="contactRadioExisting" type="radio" label="Choose Existing" onchange={handleToggleContact} checked={chooseExistingContactToggle}></lightning-input>
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12 slds-p-vertical_small">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-combobox
+                                                    name="Salutation"
+                                                    label="Salutation"
+                                                    value={salutationPicklistValue}
+                                                    options={accountSalutationOptions}
+                                                    onchange={handleChangeContactSalutation}>
+                                            </lightning-combobox>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input name="firstNameContact" type="text" label="First Name" value={data.firstNameContact} onchange={onFieldChange}></lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input name="middleNameContact" type="text" label="Middle Name" value={data.middleNameContact} onchange={onFieldChange}></lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input
+                                                    class="lastNameContact"
+                                                    name="lastNameContact"
+                                                    type="text"
+                                                    label="Last Name"
+                                                    onclick={handleClick}
+                                                    value={data.lastNameContact}
+                                                    onchange={onFieldChange}>
+                                            </lightning-input>
+                                        </div>
+
+                                        <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                            <lightning-input name="suffixContact" type="text" label="Suffix" onchange={onFieldChange}></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12 slds-p-vertical_small">
+                                    <div class="slds-grid slds-wrap slds-p-horizontal_medium">
+                                        <div class="slds-col slds-size_2-of-12 slds-hidden">
+                                            Hidden
+                                        </div>
+                                        <div class="slds-col slds-size_10-of-12 slds-p-top_x-small">
+                                            <c-custom-search-lookup
+                                                    class="contactLookup"
+                                                    icon-name="standard:contact"
+                                                    label="Contact Search"
+                                                    s-object-api-name="Contact"
+                                                    default-record-id={data.existingContactId}
+                                                    onlookupupdate={lookupRecordContact}
+                                                    placeholder="Search for matching">
+                                            </c-custom-search-lookup>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+            <div class="sections slds-p-top_x-small">
+                <div class="opportunitySection" style="background-color: #F3F3F3">
+                    <template if:false={openOpportunity}>
+                        <c-convert-lead-close-section
+                                style="overflow: hidden"
+                                current-object="Opportunity"
+                                choose-existing-toggle={chooseExistingOpportunityToggle}
+                                create-new-account-toggle={createNewOpportunityToggle}
+                                value-for-input={valueForOppCloseSection}
+                                value-for-input-name={data.opportunityName}
+                                disable-radio-button={disableExistingOpp}
+                                oncallclosesection={handleCloseSectionClick}>
+                        </c-convert-lead-close-section>
+                    </template>
+
+                    <template if:true={openOpportunity}>
+                        <div class="slds-grid slds-wrap slds-p-around_medium">
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                                            <button class="slds-button slds-button_reset slds-accordion__summary-action" title="Accordion summary" onclick={handleCloseOpportunitySection}>
+                                                    <span class="accordionIcons slds-show_inline-block">
+                                                        <span class="accordionIcon">
+                                                            <lightning-icon icon-name="utility:chevrondown" alternative-text="Open" title="Open" size="x-small"></lightning-icon>
+                                                        </span>
+                                                    </span>
+                                                <span title="Contact" class="slds-truncate slds-text-heading_x-small displayLabel slds-p-left_small">
+                                                        Opportunity
+                                                    </span>
+                                            </button>
+                                        </h3>
+                                    </div>
+                                    <div class="slds-col slds-size_9-of-12">
+                                        <h3 class="slds-text-heading_small slds-accordion__summary-heading slds-text-title_bold">
+                                            <lightning-input class="oppRadioNew" type="radio" label="Create New" onchange={handleToggleOpportunity} checked={createNewOpportunityToggle}></lightning-input>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div class="slds-grid slds-wrap slds-p-horizontal_medium">
+                                    <div class="slds-col slds-size_2-of-12">
+                                        - OR -
+                                    </div>
+                                    <div class="slds-col slds-size_10-of-12">
+                                        <h3 class="slds-text-heading_small slds-accordion__summary-heading slds-text-title_bold">
+                                            <lightning-input disabled={disableExistingOpp} class="oppRadioExisting" type="radio" label="Choose Existing" onchange={handleToggleOpportunity} checked={chooseExistingOpportunityToggle}></lightning-input>
+                                        </h3>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="slds-col slds-size_6-of-12 slds-p-vertical_small">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_3-of-12 slds-hidden">
+                                        Hidden
+                                    </div>
+                                    <div class="slds-col slds-size_9-of-12 slds-p-around_medium" style="background-color: white">
+                                        <lightning-input class="oppName" name="firstNameOpportunity" type="text" label="Opportunity Name" onchange={onFieldChange} value={data.opportunityName}></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_6-of-12 slds-p-vertical_small">
+                                <div class="slds-grid slds-wrap slds-p-horizontal_medium">
+                                    <div class="slds-col slds-size_2-of-12 slds-hidden">
+                                        Hidden
+                                    </div>
+                                    <div class="slds-col slds-size_10-of-12 slds-p-top_x-small">
+                                        <template if:false={disableExistingOpp}>
+                                            <c-custom-search-lookup
+                                                    account-record-type={data.existingAccountId}
+                                                    class="oppLookup"
+                                                    icon-name="standard:opportunity"
+                                                    label="Opportunity Search"
+                                                    s-object-api-name="Opportunity"
+                                                    onlookupupdate={lookupRecordOpp}
+                                                    default-record-id={data.existingOppId}
+                                                    placeholder="Search for matching">
+                                            </c-custom-search-lookup>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div class="bottomLevel">
+                <div class="slds-grid slds-wrap slds-p-around_x-large slds-gutters" >
+                    <div class="slds-col slds-size_6-of-12">
+                        <c-custom-search-lookup
+                                default-record-id={data.currentUserId}
+                                icon-name="standard:user"
+                                label="Record Owner"
+                                s-object-api-name="User"
+                                onlookupupdate={handleSearchUser}
+                                is-required="true"
+                                placeholder="Search User...">
+                        </c-custom-search-lookup>
+                    </div>
+
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-combobox
+                                name="Converted Status"
+                                label="Converted Status"
+                                value={currentConvertedValue}
+                                options={ConvertedStatusValues}
+                                required="true"
+                                onchange={handleChangeOppType}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer slds-modal__footer">
+            <lightning-button
+                    variant="neutral"
+                    label="Cancel"
+                    onclick={handleClose}
+            ></lightning-button>
+            <lightning-button
+                    class="slds-p-left_small"
+                    variant="brand"
+                    label="Convert"
+                    onclick={handleConvertLead}
+            ></lightning-button>
+        </div>
+        </template>
+        <template if:true={convertedSuccess}>
+            <c-convert-lead-success-screen convert-wrap={convertWrap}></c-convert-lead-success-screen>
+        </template>
+        </template>
+        <template if:true={data.isConverted}>
+            <div class="header">
+                <div class="headerName slds-align_absolute-center slds-p-top_medium">
+                    <h2 class="title slds-text-heading--medium slds-hyphenate">Convert Lead</h2>
+                </div>
+            </div>
+            <div class="slds-align_absolute-center slds-p-around_x-large" style="font-size: 2rem">
+                This lead already converted!
+            </div>
+        </template>
+    </template>
+</template>

@@ -1,0 +1,22 @@
+<aura:component description="ConverLeadWrapper" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader">
+    <aura:html tag="style">
+        .slds-modal__container {
+        width : 65% !important;
+        max-width : 65% !important;
+        }
+        .cuf-content {
+        padding-right: 0rem !important;
+        padding-left: 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        height:unset !important;
+        max-height:unset !important;
+        }
+    </aura:html>
+    <div>
+        <c:convertLead recordId="{!v.recordId}"/>
+    </div>
+</aura:component>
